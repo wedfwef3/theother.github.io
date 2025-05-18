@@ -123,35 +123,34 @@ local function FlySeat(seat, zone)
     return moved
 end
 
+
+local teleportPosition = Vector3.new(57, -5, -9000)
+local teleportCount = 10
+local delayTime = 0.1
+
+for i = 1, teleportCount do
+    humanoidRootPart.CFrame = CFrame.new(teleportPosition)
+    wait(delayTime)
+end
+
 task.spawn(function()
-    while true do
-        TPTo(Vector3.new(57, -5, -9000))
-        task.wait(1)
+    TPTo(Vector3.new(57, -5, -9000))
+    task.wait(1)
 
-        local seat = getSeat()
-        if seat then
-            seat.Disabled = false
-            SitSeat(seat)
-
-            if humanoid.SeatPart == seat then
-                print("Successfully sat down!")
-                
-                -- Move to zone once seated
-                local zone = Vector3.new(19, 3, 29870)
-                local success = FlySeat(seat, zone)
-                if not success then
-                    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-                    task.wait(0.5)
-                end
-
-                break -- Stop looping after successfully sitting
-            end
-        end
-
-        task.wait(0.5) -- Retry teleporting if sitting fails
+    local seat = getSeat()
+    if not seat then
+        return
     end
-end)
+    seat.Disabled = false
 
+    SitSeat(seat)
+
+    local zone = Vector3.new(19, 3, 29870)
+    local success = FlySeat(seat, zone)
+    if not success then
+        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        task.wait(0.5)
+    end
 
     for _, pos in ipairs(positions) do
         TPTo(pos)
