@@ -124,13 +124,22 @@ local function FlySeat(seat, zone)
 end
 
 
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = char:FindFirstChild("HumanoidRootPart") -- Ensure it's assigned
+
 local teleportPosition = Vector3.new(57, -5, -9000)
 local teleportCount = 10
 local delayTime = 0.1
 
-for i = 1, teleportCount do
-    humanoidRootPart.CFrame = CFrame.new(teleportPosition)
-    wait(delayTime)
+if humanoidRootPart then
+    for i = 1, teleportCount do
+        humanoidRootPart.CFrame = CFrame.new(teleportPosition)
+        wait(delayTime)
+    end
+else
+    warn("HumanoidRootPart not found!") -- Debugging message
 end
 
 task.spawn(function()
