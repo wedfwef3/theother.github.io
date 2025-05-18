@@ -23,7 +23,7 @@ local positions = {
     Vector3.new(57, 3, -38000), Vector3.new(57, 3, -40000),
     Vector3.new(57, 3, -42000), Vector3.new(57, 3, -44000),
     Vector3.new(57, 3, -46000), Vector3.new(57, 3, -48000),
-    Vector3.new(57, 3, -49032)
+    Vector3.new(-434, 3, -48998)
 }
 
 local WaitTime = 0.9
@@ -146,8 +146,8 @@ task.spawn(function()
         TPTo(pos)
         task.wait(WaitTime)
 
-        if pos == Vector3.new(57, 3, -49032) then
-            task.wait(2)
+        if pos == Vector3.new(-434, 3, -48998) then
+            task.wait(6)
             loadstring(game:HttpGet("https://raw.githubusercontent.com/ewewe514/lowserver.github.io/refs/heads/main/lowserver.lua"))()
         end
 
