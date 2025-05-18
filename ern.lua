@@ -133,24 +133,25 @@ task.spawn(function()
             seat.Disabled = false
             SitSeat(seat)
 
-            local weld = seat:FindFirstChild("SeatWeld")
-            if weld and weld.Part1 and weld.Part1:IsDescendantOf(player.Character) then
+            if humanoid.SeatPart == seat then
                 print("Successfully sat down!")
-                break -- Stop looping once seated
+                
+                -- Move to zone once seated
+                local zone = Vector3.new(19, 3, 29870)
+                local success = FlySeat(seat, zone)
+                if not success then
+                    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                    task.wait(0.5)
+                end
+
+                break -- Stop looping after successfully sitting
             end
         end
 
-        task.wait(0.5) -- Short wait before retrying teleport
+        task.wait(0.5) -- Retry teleporting if sitting fails
     end
 end)
 
-
-    local zone = Vector3.new(19, 3, 29870)
-    local success = FlySeat(seat, zone)
-    if not success then
-        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-        task.wait(0.5)
-    end
 
     for _, pos in ipairs(positions) do
         TPTo(pos)
