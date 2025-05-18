@@ -124,21 +124,16 @@ local function FlySeat(seat, zone)
 end
 
 task.spawn(function()
-    while true do
-        TPTo(Vector3.new(57, -5, -9000))
-        task.wait(1)
+    TPTo(Vector3.new(57, -5, -9000))
+    task.wait(1)
 
-        local seat = getSeat()
-        if seat then
-            seat.Disabled = false
-            SitSeat(seat)
-            break -- Exit the loop once seated successfully
-        end
-
-        task.wait(0.5) -- Short wait before retrying
+    local seat = getSeat()
+    if not seat then
+        return
     end
-end)
+    seat.Disabled = false
 
+    SitSeat(seat)
 
     local zone = Vector3.new(19, 3, 29870)
     local success = FlySeat(seat, zone)
